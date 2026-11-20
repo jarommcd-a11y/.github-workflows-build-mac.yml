@@ -34,7 +34,7 @@ jobs:
             --hidden-import scipy \
             --hidden-import soundfile \
             --hidden-import audioread \
-           --Audio_Analyser_Pro_V12.1_Standalone.py\
+           --Audio_Analyser_Pro_V12.1_Standalone.py
            --icon=Serato_Audio_Analyser_Pro_v12.ico
 
       - name: Zip the .app bundle
