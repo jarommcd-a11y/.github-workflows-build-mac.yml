@@ -1,4 +1,5 @@
-         
+name: Build macOS Standalone App (v12.1)
+
 on:
   workflow_dispatch:
   push:
@@ -21,12 +22,13 @@ jobs:
         run: |
           brew install python-tk@3.12 libsndfile
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install pillow -r requirements.txt
 
       - name: Build macOS .app with PyInstaller
         run: |
           pyinstaller --noconfirm --clean --windowed \
             --name "Serato_Audio_Analyser_Pro_v12.1" \
+            --icon "Serato_Audio_Analyser_Pro_v12.ico" \
             --collect-all tkinterdnd2 \
             --collect-all librosa \
             --collect-all mutagen \
@@ -34,8 +36,7 @@ jobs:
             --hidden-import scipy \
             --hidden-import soundfile \
             --hidden-import audioread \
-           --Audio_Analyser_Pro_V12.1_Standalone.py
-           --icon=Serato_Audio_Analyser_Pro_v12.ico
+            Audio_Analyser_Pro_V12.1_Standalone.py
 
       - name: Zip the .app bundle
         run: |
