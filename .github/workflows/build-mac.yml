@@ -47,8 +47,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Serato_Audio_Analyser_Pro_v12.1_macOS
-          path: dist/Serato_Audio_Analyser_Pro_v12.1_macOS.zipname: Build macOS Standalone App (v12.1)
-
+          path: dist/Serato_Audio_Analyser_Pro_v12.1_macOS.zip
+          name: Build macOS Standalone App (v12.1)
+          
 on:
   workflow_dispatch:
   push:
