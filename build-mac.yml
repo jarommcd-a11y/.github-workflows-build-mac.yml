@@ -1,1 +1,101 @@
 
+name: Build macOS Standalone App (v12.1)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Tcl/Tk & dependencies
+        run: |
+          brew install python-tk@3.12 libsndfile
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build macOS .app with PyInstaller
+        run: |
+          pyinstaller --noconfirm --clean --windowed \
+            --name "Serato_Audio_Analyser_Pro_v12.1" \
+            --collect-all tkinterdnd2 \
+            --collect-all librosa \
+            --collect-all mutagen \
+            --hidden-import numba \
+            --hidden-import scipy \
+            --hidden-import soundfile \
+            --hidden-import audioread \
+            Audio_Analyser_Pro_V12.1_Standalone.py
+
+      - name: Zip the .app bundle
+        run: |
+          cd dist
+          ditto -c -k --sequesterRsrc --keepParent "Serato_Audio_Analyser_Pro_v12.1.app" "Serato_Audio_Analyser_Pro_v12.1_macOS.zip"
+
+      - name: Upload macOS Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Serato_Audio_Analyser_Pro_v12.1_macOS
+          path: dist/Serato_Audio_Analyser_Pro_v12.1_macOS.zipname: Build macOS Standalone App (v12.1)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Tcl/Tk & dependencies
+        run: |
+          brew install python-tk@3.12 libsndfile
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build macOS .app with PyInstaller
+        run: |
+          pyinstaller --noconfirm --clean --windowed \
+            --name "Serato_Audio_Analyser_Pro_v12.1" \
+            --collect-all tkinterdnd2 \
+            --collect-all librosa \
+            --collect-all mutagen \
+            --hidden-import numba \
+            --hidden-import scipy \
+            --hidden-import soundfile \
+            --hidden-import audioread \
+            Audio_Analyser_Pro_V12.1_Standalone.py
+
+            \
+            --icon=Serato_Audio_Analyser_Pro_v12.ico
+
+      - name: Zip the .app bundle
+        run: |
+          cd dist
+          ditto -c -k --sequesterRsrc --keepParent "Serato_Audio_Analyser_Pro_v12.1.app" "Serato_Audio_Analyser_Pro_v12.1_macOS.zip"
+
+      - name: Upload macOS Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Serato_Audio_Analyser_Pro_v12.1_macOS
+          path: dist/Serato_Audio_Analyser_Pro_v12.1_macOS.zip
