@@ -1,0 +1,9 @@
+librosa
+mutagen
+numpy
+soundfile
+tkinterdnd2
+audioread
+scipy
+numba
+pyinstaller
